@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.target.targetcasestudy.ui.DealListFragment
 import com.target.targetcasestudy.ui.payment.PaymentDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,10 +13,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//    supportFragmentManager.beginTransaction()
-//      .replace(R.id.container, DealListFragment())
-//      .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

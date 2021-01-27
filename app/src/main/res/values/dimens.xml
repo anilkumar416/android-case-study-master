@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="deal_list_item_image_size">80dp</dimen>
+  <dimen name="space_8dp">8dp</dimen>
+
 </resources>

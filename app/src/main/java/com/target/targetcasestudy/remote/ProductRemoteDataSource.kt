@@ -9,4 +9,6 @@ class ProductRemoteDataSource @Inject constructor(
 
     suspend fun getProductList() = getResult { productApi.getProducts() }
 
+    suspend fun getProductDetail(id: Int) = getResult { productApi.getProductDetails(id) }
+
 }
