@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.target.targetcasestudy.databinding.ProductDetailFragmentBinding
 import com.target.targetcasestudy.model.ProductData
@@ -21,6 +22,7 @@ class ProductDetailsFragment : Fragment() {
 
     private var binding: ProductDetailFragmentBinding by autoCleared()
     private val viewModel: ProductDetailViewModel by viewModels()
+    val args: ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +35,7 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getInt("id")?.let { viewModel.start(it) }
+        args.receiveProductId.let { viewModel.start(it) }
         setupObservers()
     }
 

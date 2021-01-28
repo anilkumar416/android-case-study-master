@@ -3,12 +3,14 @@ package com.target.targetcasestudy.ui.productList
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.target.targetcasestudy.databinding.ItemProductsBinding
 import com.target.targetcasestudy.model.ProductData
+import com.target.targetcasestudy.ui.ProductListFragmentDirections
 
 class ProductsAdapter :
     ListAdapter<ProductData, RecyclerView.ViewHolder>(ProductsDiffUtil()) {
@@ -27,22 +29,6 @@ class ProductsAdapter :
         private val binding: ItemProductsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-//        init {
-//            binding.setClickListener {
-//                binding.picture?.let { picture ->
-//                    navigateToPicture(picture, it)
-//                }
-//            }
-//        }
-//
-//        private fun navigateToPicture(picture: Pictures, view: View) {
-//            val direction =
-//                PicturesListFragmentDirections.actionPicturesListFragmentToPictureDetailsFragment(
-//                    picture.id
-//                )
-//            view.findNavController().navigate(direction)
-//        }
-
         fun bind(item: ProductData) {
 
             binding.apply {
@@ -55,9 +41,19 @@ class ProductsAdapter :
 
                 actionButton1.text = item.regular_price?.display_string
                 actionButton2.text = item.sale_price?.display_string
+                
                 Glide.with(root)
                     .load(item.image_url)
                     .into(mediaImage)
+
+                root.setOnClickListener {
+                    val direction =
+                        ProductListFragmentDirections.actionDealListFragmentToProductDetailsFragment(
+                            item.id
+                        )
+                    it.findNavController().navigate(direction)
+
+                }
             }
         }
     }

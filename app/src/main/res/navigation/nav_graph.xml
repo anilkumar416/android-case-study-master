@@ -21,5 +21,10 @@
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.target.targetcasestudy.ui.productDetails.ProductDetailsFragment"
-        android:label="ProductDetailsFragment" />
+        android:label="ProductDetailsFragment">
+        <argument
+            android:name="receiveProductId"
+            app:argType="integer" />
+
+    </fragment>
 </navigation>
