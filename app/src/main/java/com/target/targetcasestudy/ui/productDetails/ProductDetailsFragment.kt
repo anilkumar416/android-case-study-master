@@ -55,11 +55,11 @@ class ProductDetailsFragment : Fragment() {
 
     private fun bindCharacter(productData: ProductData) {
 
-        binding.actionButton1.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-
-        if (productData.sale_price?.display_string.isNullOrBlank()) {
-            binding.actionButton1.paintFlags = Paint.ANTI_ALIAS_FLAG
-        }
+        binding.actionButton1.paintFlags =
+            if (!productData.sale_price?.display_string.isNullOrBlank())
+                Paint.STRIKE_THRU_TEXT_FLAG
+            else
+                Paint.ANTI_ALIAS_FLAG
 
         binding.primaryText.text = productData.title
         binding.actionButton1.text = productData.regular_price?.display_string

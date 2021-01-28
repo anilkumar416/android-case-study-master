@@ -1,75 +1,80 @@
 package com.target.targetcasestudy.ui.productList
 
-import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.target.targetcasestudy.databinding.ItemCharacterBinding
+import com.target.targetcasestudy.databinding.ItemProductsBinding
 import com.target.targetcasestudy.model.ProductData
 
-class ProductsAdapter(private val listener: CharacterItemListener) :
-    RecyclerView.Adapter<ProductViewHolder>() {
+class ProductsAdapter :
+    ListAdapter<ProductData, RecyclerView.ViewHolder>(ProductsDiffUtil()) {
 
-    interface CharacterItemListener {
-        fun onClickedCharacter(characterId: Int)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return ProductViewHolder(
+            ItemProductsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
-    private val items = ArrayList<ProductData>()
+    class ProductViewHolder(
+        private val binding: ItemProductsBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun setItems(items: ArrayList<ProductData>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
+//        init {
+//            binding.setClickListener {
+//                binding.picture?.let { picture ->
+//                    navigateToPicture(picture, it)
+//                }
+//            }
+//        }
+//
+//        private fun navigateToPicture(picture: Pictures, view: View) {
+//            val direction =
+//                PicturesListFragmentDirections.actionPicturesListFragmentToPictureDetailsFragment(
+//                    picture.id
+//                )
+//            view.findNavController().navigate(direction)
+//        }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding: ItemCharacterBinding =
-            ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ProductViewHolder(binding, listener)
-    }
+        fun bind(item: ProductData) {
 
-    override fun getItemCount(): Int = items.size
+            binding.apply {
+                supportingText.text = item.title
+                actionButton1.paintFlags =
+                    if (!item.sale_price?.display_string.isNullOrBlank())
+                        Paint.STRIKE_THRU_TEXT_FLAG
+                    else
+                        Paint.ANTI_ALIAS_FLAG
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) =
-        holder.bind(items[position])
-
-}
-
-class ProductViewHolder(
-    private val itemBinding: ItemCharacterBinding,
-    private val listener: ProductsAdapter.CharacterItemListener
-) : RecyclerView.ViewHolder(itemBinding.root),
-    View.OnClickListener {
-
-    private lateinit var product: ProductData
-
-    init {
-        itemBinding.root.setOnClickListener(this)
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun bind(item: ProductData) {
-        this.product = item
-        itemBinding.supportingText.text = item.title
-
-        itemBinding.actionButton1.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-
-        if (item.sale_price?.display_string.isNullOrBlank()) {
-            itemBinding.actionButton1.paintFlags = Paint.ANTI_ALIAS_FLAG
+                actionButton1.text = item.regular_price?.display_string
+                actionButton2.text = item.sale_price?.display_string
+                Glide.with(root)
+                    .load(item.image_url)
+                    .into(mediaImage)
+            }
         }
-
-        itemBinding.actionButton1.text = item.regular_price?.display_string
-        itemBinding.actionButton2.text = item.sale_price?.display_string
-        Glide.with(itemBinding.root)
-            .load(item.image_url)
-            .into(itemBinding.mediaImage)
     }
 
-    override fun onClick(v: View?) {
-        listener.onClickedCharacter(product.id)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val picture = getItem(position)
+        (holder as ProductViewHolder).bind(picture)
     }
-
 }
+
+class ProductsDiffUtil : DiffUtil.ItemCallback<ProductData>() {
+    override fun areItemsTheSame(oldItem: ProductData, newItem: ProductData): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: ProductData, newItem: ProductData): Boolean {
+        return oldItem == newItem
+    }
+}
+
