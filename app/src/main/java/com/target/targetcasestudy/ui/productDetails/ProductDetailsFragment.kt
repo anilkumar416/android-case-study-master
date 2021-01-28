@@ -43,6 +43,7 @@ class ProductDetailsFragment : Fragment() {
         viewModel.product.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
                     bindCharacter(it.data!!)
                 }
 
@@ -50,6 +51,7 @@ class ProductDetailsFragment : Fragment() {
                     Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
 
                 Resource.Status.LOADING -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
             }
         })

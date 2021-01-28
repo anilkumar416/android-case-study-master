@@ -32,7 +32,9 @@ class ProductsAdapter :
         fun bind(item: ProductData) {
 
             binding.apply {
+
                 supportingText.text = item.title
+
                 actionButton1.paintFlags =
                     if (!item.sale_price?.display_string.isNullOrBlank())
                         Paint.STRIKE_THRU_TEXT_FLAG
@@ -40,6 +42,7 @@ class ProductsAdapter :
                         Paint.ANTI_ALIAS_FLAG
 
                 actionButton1.text = item.regular_price?.display_string
+
                 actionButton2.text = item.sale_price?.display_string
                 
                 Glide.with(root)

@@ -27,7 +27,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:color/darker_gray" />
+                tools:srcCompat="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/primary_text"
@@ -36,14 +36,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/primary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintBottom_toTopOf="@+id/action_button_1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/media_image" />
+                app:layout_constraintTop_toBottomOf="@+id/media_image"
+                tools:text="@string/primary" />
 
             <Button
                 android:id="@+id/action_button_1"
@@ -54,11 +54,11 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/action_1"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintBottom_toTopOf="@+id/supporting_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/primary_text" />
+                app:layout_constraintTop_toBottomOf="@+id/primary_text"
+                tools:text="@string/action_1" />
 
             <Button
                 android:id="@+id/action_button_2"
@@ -69,10 +69,10 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@string/action_2"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintStart_toEndOf="@+id/action_button_1"
-                app:layout_constraintTop_toTopOf="@+id/action_button_1" />
+                app:layout_constraintTop_toTopOf="@+id/action_button_1"
+                tools:text="@string/action_2" />
 
             <TextView
                 android:id="@+id/supporting_text"
@@ -84,15 +84,28 @@
                 android:layout_marginBottom="24dp"
                 android:lineSpacingExtra="8dp"
                 android:maxLines="20"
-                android:text="@string/expanded_supporting"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/action_button_1" />
+                app:layout_constraintTop_toBottomOf="@+id/action_button_1"
+                tools:text="@string/expanded_supporting" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.cardview.widget.CardView>
 </androidx.core.widget.NestedScrollView>

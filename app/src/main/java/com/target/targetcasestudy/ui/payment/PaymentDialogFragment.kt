@@ -1,6 +1,8 @@
 package com.target.targetcasestudy.ui.payment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.target.targetcasestudy.R
+import com.target.targetcasestudy.databinding.DialogPaymentBinding
+import com.target.targetcasestudy.databinding.ProductDetailFragmentBinding
+import com.target.targetcasestudy.utils.autoCleared
 
 /**
  * Dialog that displays a minimal credit card entry form.
@@ -23,26 +28,39 @@ import com.target.targetcasestudy.R
  */
 class PaymentDialogFragment : DialogFragment() {
 
-  private lateinit var submitButton: Button
-  private lateinit var creditCardInput: EditText
+    private var binding: DialogPaymentBinding by autoCleared()
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    val root = inflater.inflate(R.layout.dialog_payment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DialogPaymentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-    submitButton = root.findViewById(R.id.submit)
-    creditCardInput = root.findViewById(R.id.card_number)
-    val cancelButton: Button = root.findViewById(R.id.cancel)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    cancelButton.setOnClickListener { dismiss() }
-    submitButton.setOnClickListener { dismiss() }
+    }
 
-    // TODO enable the submit button based on card number validity using Validators.validateCreditCard()
+    // Returns true if given
+    // card number is valid
+    fun checkLuhn(cardNo: String): Boolean {
+        val nDigits = cardNo.length
+        var nSum = 0
+        var isSecond = false
+        for (i in nDigits - 1 downTo 0) {
+            var d = cardNo[i] - '0'
+            if (isSecond == true) d = d * 2
 
-    return root
-  }
-
+            // We add two digits to handle
+            // cases that make two digits
+            // after doubling
+            nSum += d / 10
+            nSum += d % 10
+            isSecond = !isSecond
+        }
+        return nSum % 10 == 0
+    }
 }

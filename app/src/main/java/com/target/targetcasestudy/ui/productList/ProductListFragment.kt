@@ -48,15 +48,17 @@ class ProductListFragment : Fragment() {
         viewModel.products.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Resource.Status.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
+//                    binding.progressBar.visibility = View.GONE
                     if (!it.data.isNullOrEmpty())
                         adapter.submitList(it.data)
                 }
                 Resource.Status.ERROR ->
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
 
-                Resource.Status.LOADING ->
-                    binding.progressBar.visibility = View.VISIBLE
+                Resource.Status.LOADING -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+
+                }
             }
         })
     }
