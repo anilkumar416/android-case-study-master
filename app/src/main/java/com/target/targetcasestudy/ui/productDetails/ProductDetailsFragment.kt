@@ -16,13 +16,16 @@ import com.target.targetcasestudy.model.ProductData
 import com.target.targetcasestudy.utils.Resource
 import com.target.targetcasestudy.utils.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import android.os.AsyncTask
+import android.os.Handler
+import android.os.Looper
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
 
     private var binding: ProductDetailFragmentBinding by autoCleared()
     private val viewModel: ProductDetailViewModel by viewModels()
-    val args: ProductDetailsFragmentArgs by navArgs()
+    private val args: ProductDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,19 +62,44 @@ class ProductDetailsFragment : Fragment() {
 
     private fun bindCharacter(productData: ProductData) {
 
-        binding.actionButton1.paintFlags =
-            if (!productData.sale_price?.display_string.isNullOrBlank())
-                Paint.STRIKE_THRU_TEXT_FLAG
-            else
-                Paint.ANTI_ALIAS_FLAG
+        binding.apply {
+            actionButton1.paintFlags =
+                if (!productData.sale_price?.display_string.isNullOrBlank())
+                    Paint.STRIKE_THRU_TEXT_FLAG
+                else
+                    Paint.ANTI_ALIAS_FLAG
 
-        binding.primaryText.text = productData.title
-        binding.actionButton1.text = productData.regular_price?.display_string
-        binding.actionButton2.text = productData.sale_price?.display_string
-        binding.supportingText.text = productData.description
-        Glide.with(binding.root)
-            .load(productData.image_url)
-            .into(binding.mediaImage)
+            primaryText.text = productData.title
+            actionButton1.text = productData.regular_price?.display_string
+            actionButton2.text = productData.sale_price?.display_string
 
+            supportingText.text = productData.description
+
+            //TODO Using the below method we can populate large string value
+            // but even TextView has a limit and it hangs/freezes
+//            Dispatch.asyncOnBackground {
+//                val value = productData.description
+//                Dispatch.asyncOnMain { supportingText.text = value }
+//            }
+
+            Glide.with(root)
+                .load(productData.image_url)
+                .into(mediaImage)
+        }
     }
 }
+
+
+//object Dispatch {
+//    fun asyncOnBackground(call: () -> Unit) {
+//        AsyncTask.execute {
+//            call()
+//        }
+//    }
+//
+//    fun asyncOnMain(call: () -> Unit) {
+//        Handler(Looper.getMainLooper()).post {
+//            call()
+//        }
+//    }
+//}

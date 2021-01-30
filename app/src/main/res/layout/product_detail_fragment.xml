@@ -83,7 +83,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
                 android:lineSpacingExtra="8dp"
-                android:maxLines="20"
+                android:maxLines="12"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -103,9 +103,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.cardview.widget.CardView>
 </androidx.core.widget.NestedScrollView>
