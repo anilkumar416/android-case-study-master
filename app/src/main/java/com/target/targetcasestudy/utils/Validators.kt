@@ -25,19 +25,24 @@ package com.target.targetcasestudy.data
 // Returns true if given
 // card number is valid
 fun validateCreditCard(cardNo: String): Boolean {
-    val nDigits = cardNo.length
-    var nSum = 0
-    var isSecond = false
-    for (i in nDigits - 1 downTo 0) {
-        var d = cardNo[i] - '0'
-        if (isSecond == true) d = d * 2
 
-        // We add two digits to handle
-        // cases that make two digits
-        // after doubling
-        nSum += d / 10
-        nSum += d % 10
-        isSecond = !isSecond
+    val nDigits = cardNo.length
+
+    if (nDigits !in 20 downTo 12)
+        return false
+
+    var sum = 0
+    var alternate = false
+    for (i in nDigits - 1 downTo 0) {
+        var n: Int = cardNo.substring(i, i + 1).toInt()
+        if (alternate) {
+            n *= 2
+            if (n > 9) {
+                n = n % 10 + 1
+            }
+        }
+        sum += n
+        alternate = !alternate
     }
-    return nSum % 10 == 0
+    return sum % 10 == 0
 }

@@ -75,7 +75,7 @@ class ProductDetailsFragment : Fragment() {
 
             supportingText.text = productData.description
 
-            //TODO Using the below method we can populate large string value
+            // Using the below method we can populate large string value
             // but even TextView has a limit and it hangs/freezes
 //            Dispatch.asyncOnBackground {
 //                val value = productData.description

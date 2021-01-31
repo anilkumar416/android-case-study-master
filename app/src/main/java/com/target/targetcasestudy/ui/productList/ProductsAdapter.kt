@@ -13,7 +13,7 @@ import com.target.targetcasestudy.model.ProductData
 import com.target.targetcasestudy.ui.ProductListFragmentDirections
 
 class ProductsAdapter :
-    ListAdapter<ProductData, RecyclerView.ViewHolder>(ProductsDiffUtil()) {
+    ListAdapter<ProductData, RecyclerView.ViewHolder>(ProductsDiffUtil())  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ProductViewHolder(
