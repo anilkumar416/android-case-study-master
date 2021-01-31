@@ -71,4 +71,32 @@ class ProductDaoTest {
         assertThat(allproductItems).isEqualTo(productItem)
     }
 
+    @Test
+    fun getListProductDetails() = runBlockingTest {
+
+        val regularPrice1 = RegularPrice(12, "$12", "$12")
+        val salePrice1 = SalePrice(10, "10$", "10$")
+        val productItem1 = ProductData(
+            2, "test1", "b1", "Testing room db",
+            "url", regularPrice1, salePrice1
+        )
+
+        val regularPrice = RegularPrice(12, "$12", "$12")
+        val salePrice = SalePrice(10, "10$", "10$")
+        val productItem = ProductData(
+            1, "test1", "b1", "Testing room db",
+            "url", regularPrice, salePrice
+        )
+
+        val list = ArrayList<ProductData>()
+        list.add(productItem)
+        list.add(productItem1)
+
+        dao.insertAll(list)
+
+        val allproductItems = dao.getAllProducts().getOrAwaitValue()
+        assertThat(allproductItems).isEqualTo(list)
+    }
+
+
 }
