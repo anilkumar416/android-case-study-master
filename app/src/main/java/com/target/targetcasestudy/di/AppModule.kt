@@ -24,10 +24,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(ProductApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+            Retrofit.Builder()
+                    .baseUrl(ProductApi.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
 
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
@@ -35,17 +35,17 @@ object AppModule {
     @Provides
     @Singleton
     fun provideProductApi(retrofit: Retrofit): ProductApi =
-        retrofit.create(ProductApi::class.java)
+            retrofit.create(ProductApi::class.java)
 
     @Singleton
     @Provides
     fun provideCharacterRemoteDataSource(characterService: ProductApi) =
-        ProductRemoteDataSource(characterService)
+            ProductRemoteDataSource(characterService)
 
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext appContext: Context) =
-        AppDatabase.getDatabase(appContext)
+            AppDatabase.getDatabase(appContext)
 
     @Singleton
     @Provides
@@ -54,9 +54,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        remoteDataSource: ProductRemoteDataSource,
-        localDataSource: ProductDao
-    ) =
-        ProductRepository(remoteDataSource, localDataSource)
+            remoteDataSource: ProductRemoteDataSource,
+            localDataSource: ProductDao) = ProductRepository(remoteDataSource, localDataSource)
 
 }

@@ -24,5 +24,4 @@ class ProductDetailViewModel @ViewModelInject constructor(
     fun start(id: Int) {
         _id.value = id
     }
-
 }
